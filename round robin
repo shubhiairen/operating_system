@@ -1,0 +1,57 @@
+#include
+using namespace std;
+int main()
+{
+int bt[10],rem_bt[10],n,tq,wt[10],t=0,flag=1,tat[10],avwt=0,avtat=0;
+cout<<"enter the no of processes\n";
+cin>>n;
+cout<<"enter the burst time of the processes\n";
+for(int i=0;i<n;i++)
+{
+cout<<"p"<<i+1<<"\t";
+cin>>bt[i];
+rem_bt[i]=bt[i];
+}
+cout<<"enter the value of time quantum\n";
+cin>>tq;
+wt[n]=0;
+int i=0;
+while(true)
+{
+bool flag=true;
+for(int i=0;i<n;i++)
+{if(rem_bt[i]>0)
+{ flag=false;
+if(rem_bt[i]>tq)
+{
+t=t+tq;
+rem_bt[i]-=tq;
+}
+else
+{
+t=t+rem_bt[i];
+wt[i]=t-bt[i];
+rem_bt[i]=0;
+tat[i]=bt[i]+wt[i];
+}
+}
+}
+if(flag==true)
+break;
+
+}
+
+for(int i=0;i<n;i++)
+{
+cout<<"process"<<"\t"<<"burst time"<<"\t"<<"waiting time"<<"\t"<<"turn around time"<<"\n";
+avwt+=wt[i];
+cout<<"P["<<i+1<<"]"<<"\t"<<bt[i]<<"\t\t"<<wt[i]<<"\t\t"<<tat[i]<<"\n";
+avtat+=tat[i];
+}
+avwt/=n;
+avtat/=n;
+cout<<"\nAverage Waiting Time:"<<avwt;
+cout<<"\nAverage Turnaround Time:"<<avtat;
+
+return 0;
+}
